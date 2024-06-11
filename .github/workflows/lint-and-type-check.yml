@@ -1,0 +1,31 @@
+name: Lint and Type Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+
+      - name: Run lint
+        run: |
+          pnpm lint
+
+      - name: Run type-check
+        run: |
+          pnpm type-check
+
+      - name: Report lint and type errors
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-and-type-errors
+          path: lint-and-type-errors.txt
